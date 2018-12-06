@@ -43,6 +43,18 @@ class DB{
 		else return false;
 	}
 
+	public function createTable($name, $cols){
+		if($this->isTableInDatabase($name)) return false;
+		$lines = [];
+		foreach ($cols as $key => $value) {
+			array_push($lines, $key . " " . $value);
+		}
+		$lines = join(',',$lines);
+		$query = "CREATE TABLE " . $name . " (" . $lines . ")";
+		$this->queryNoFetch($query);
+		return true;
+	}
+
 	public function query($query, $parameters = []){ // Effectue la requête $query avec les paramètres $parameters. Les clés doivent porter le nom des paramètres // Erreur : 1 = Mauvaise query
 		$req = $this->_handle->prepare($query);
 		if(!$req) return 1;
