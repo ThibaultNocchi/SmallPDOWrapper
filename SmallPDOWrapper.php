@@ -36,6 +36,13 @@ class DB{
 		return $handle;
 	}
 
+	public function isTableInDatabase($name){
+		$query = "SELECT * FROM information_schema.tables WHERE table_name = :name";
+		$results = $this->query($query, ["name"=>$name]);
+		if(count($results) > 0) return true;
+		else return false;
+	}
+
 	public function query($query, $parameters = []){ // Effectue la requête $query avec les paramètres $parameters. Les clés doivent porter le nom des paramètres // Erreur : 1 = Mauvaise query
 		$req = $this->_handle->prepare($query);
 		if(!$req) return 1;
