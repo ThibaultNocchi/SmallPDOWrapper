@@ -191,6 +191,17 @@ class DB{
 
 	}
 
+	public function deleteKey($table, $keys){
+		$query = "DELETE FROM ".$table." WHERE ";
+		$toInsert = [];
+		foreach ($keys as $key => $value) {
+			array_push($toInsert, $key." = :".$key);
+		}
+		$toInsert = join(" AND ", $toInsert);
+		$query .= $toInsert;
+		$this->queryNoFetch($query, $keys);
+	}
+
 	public function countRows($table, $datas = [], $whereKey = ""){ // Compte le nombre de lignes qui correpondent à la clé dans whereKey
 
 		$req = 'SELECT COUNT(*) AS nbr FROM '.$table;
