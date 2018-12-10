@@ -43,14 +43,24 @@ class DB{
 		else return false;
 	}
 
-	public function createTable($name, $cols){
+	public function createTable($name, $cols, $constraints = null){
+
 		if($this->isTableInDatabase($name)) return false;
+
 		$lines = [];
 		foreach ($cols as $key => $value) {
 			array_push($lines, $key . " " . $value);
 		}
 		$lines = join(',',$lines);
-		$query = "CREATE TABLE " . $name . " (" . $lines . ")";
+		$query = "CREATE TABLE " . $name . " (" . $lines;
+
+		if($constraints != null && $constraints != []){
+			$lines = join(',',$constraints);
+			$query .= ",".$lines;
+		}
+
+		$query .= ")";
+
 		$this->queryNoFetch($query);
 		return true;
 	}
