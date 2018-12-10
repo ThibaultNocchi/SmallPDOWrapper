@@ -43,7 +43,7 @@ class DB{
 		else return false;
 	}
 
-	public function createTable($name, $cols, $constraints = null){
+	public function createTable($name, $cols, $constraints = null, $encoding = null){
 
 		if($this->isTableInDatabase($name)) return false;
 
@@ -60,6 +60,9 @@ class DB{
 		}
 
 		$query .= ")";
+
+		if($encoding != null && $encoding != "")
+			$query .= " CHARACTER SET ".$encoding;
 
 		$this->queryNoFetch($query);
 		return true;
