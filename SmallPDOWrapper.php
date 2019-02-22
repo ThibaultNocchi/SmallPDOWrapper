@@ -1,5 +1,7 @@
 <?php
 
+/* Updated on 22-02-2019 18:54 */
+
 class DB{
 
 	private $_host;
