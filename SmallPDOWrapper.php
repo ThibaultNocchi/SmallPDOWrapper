@@ -1,6 +1,6 @@
 <?php
 
-/* Updated on 26-02-2019 22:51 */
+/* Updated on 01-07-2019 16:02 */
 
 class SmallPDOWrapper{
 
@@ -179,9 +179,9 @@ class SmallPDOWrapper{
      * Ex.:
      * $parameters = ["ID" => 1, "Name" => "Christian"]
      *
-     * @return void
+     * @return int ID of the insert
      */
-    public function insertDatas(string $table, array $datas){
+    public function insertDatas(string $table, array $datas): int{
 
         $req = 'INSERT INTO '.$table.'(';
 
@@ -203,6 +203,8 @@ class SmallPDOWrapper{
         
         $req = $this->_handle->prepare($req);
         $req->execute($datas);
+        $id = $this->_handle->lastInsertId();
+        return (int)$id;
 
     }
 
